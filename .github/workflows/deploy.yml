@@ -47,8 +47,8 @@ jobs:
           name: build
           path: dist/
 
-      - name: Install lftp, ca-certificates
-        run: sudo apt-get update && sudo apt-get install -y lftp ca-certificates
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
 
       - name: Deploy
         env:
@@ -61,6 +61,7 @@ jobs:
           set net:timeout 5;
           set net:max-retries 2;
           set net:reconnect-interval-base 5;
-          open -u $USER,$PASSWORD $HOST;
+          set ssl:verify-certificate no;
+          open -u $USER,$PASSWORD $HOST:$PORT;
           mirror dist / -Renv --parallel=10
           "
