@@ -58,7 +58,12 @@ jobs:
           SFTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
         run: |
           lftp -vv -c "
+          set net:timeout 5;
+          set net:max-retries 2;
+          set net:reconnect-interval-base 5;
+          set ftp:ssl-force yes;
+          set ftp:ssl-protect-data true;
           set ssl:verify-certificate no;
           open -u $SFTP_USER,$SFTP_PASSWORD ftp://$SFTP_HOST;
-          mirror -R --delete dist/ /
+          mirror dist / -Renv --parallel=10"
           "
