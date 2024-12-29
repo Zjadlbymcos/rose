@@ -56,7 +56,7 @@ jobs:
           SFTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
         run: |
           lftp -c "
-          set sftp:auto-confirm yes;
+          set ssl:verify-certificate no;
           open -u $SFTP_USER,$SFTP_PASSWORD ftp://$SFTP_HOST;
           mirror -R --delete ./ /
           "
