@@ -57,7 +57,7 @@ jobs:
           SFTP_PASSWORD: ${{ secrets.DEPLOY_FTP_PASSWORD }}
           SFTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
         run: |
-          lftp -c "
+          lftp -vv -c "
           set ssl:verify-certificate no;
           open -u $SFTP_USER,$SFTP_PASSWORD ftp://$SFTP_HOST;
           mirror -R --delete dist/ /
