@@ -38,6 +38,7 @@ jobs:
     name: Deploy to SFTP
     runs-on: ubuntu-latest
     needs: build
+    environment: production
 
     steps:
       - name: Download build artifacts
