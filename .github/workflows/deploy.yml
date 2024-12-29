@@ -63,5 +63,5 @@ jobs:
           set net:reconnect-interval-base 5;
           set ssl:verify-certificate no;
           open -u $USER,$PASSWORD $HOST;
-          mirror dist / -Renv --parallel=10"
+          mirror dist / -Renv --parallel=10
           "
