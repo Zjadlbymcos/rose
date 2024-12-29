@@ -57,6 +57,6 @@ jobs:
         run: |
           lftp -c "
           set sftp:auto-confirm yes;
-          open -u $SFTP_USER,$SFTP_PASSWORD sftp://$SFTP_HOST:$SFTP_PORT;
+          open -u $SFTP_USER,$SFTP_PASSWORD ftp://$SFTP_HOST;
           mirror -R --delete ./ /
           "
