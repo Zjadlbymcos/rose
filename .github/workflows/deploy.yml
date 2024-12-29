@@ -50,20 +50,18 @@ jobs:
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      - name: Deploy via SFTP
+      - name: Deploy
         env:
-          SFTP_HOST: ${{ secrets.DEPLOY_FTP_HOST }}
-          SFTP_USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
-          SFTP_PASSWORD: ${{ secrets.DEPLOY_FTP_PASSWORD }}
-          SFTP_PORT: ${{ secrets.DEPLOY_FTP_PORT }}
+          HOST: ${{ secrets.DEPLOY_FTP_HOST }}
+          USER: ${{ secrets.DEPLOY_FTP_USERNAME }}
+          PASSWORD: ${{ secrets.DEPLOY_FTP_PASSWORD }}
+          PORT: ${{ secrets.DEPLOY_FTP_PORT }}
         run: |
           lftp -vv -c "
           set net:timeout 5;
           set net:max-retries 2;
           set net:reconnect-interval-base 5;
-          set ftp:ssl-force yes;
-          set ftp:ssl-protect-data true;
           set ssl:verify-certificate no;
-          open -u $SFTP_USER,$SFTP_PASSWORD ftp://$SFTP_HOST;
+          open -u $USER,$PASSWORD $HOST;
           mirror dist / -Renv --parallel=10"
           "
